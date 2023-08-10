@@ -29,11 +29,11 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  *
- * bl_config.h
+ * bl_dgemm_kernel.h
  *
  *
  * Purpose:
- * this header file contains configuration parameters.
+ * this header file contains all function prototypes.
  *
  * Todo:
  *
@@ -43,8 +43,15 @@
  *
  * */
 
-#ifndef BLISLAB_CONFIG_H
-#define BLISLAB_CONFIG_H
+
+#ifndef BLISLAB_DGEMM_KERNEL_H
+#define BLISLAB_DGEMM_KERNEL_H
+
+#include "bl_config.h"
+
+#include <stdio.h>
+#include <arm_sve.h>
+
 
 // Allow C++ users to include this header file in their source code. However,
 // we make the extern "C" conditional on whether we're using a C++ compiler,
@@ -53,23 +60,52 @@
 extern "C" {
 #endif
 
-#define GEMM_SIMD_ALIGN_SIZE 32
+typedef unsigned long long dim_t;
 
-#if 1
+struct aux_s {
+    double *b_next;
+    float  *b_next_s;
+    char   *flag;
+    int    pc;
+    int    m;
+    int    n;
+};
+typedef struct aux_s aux_t;
 
-// Kc * Mc must fit in L3 cache
-// Kc * Nr must fit in L2 cache
-// Kc * Mr must fit in L1 cache
+void bl_dgemm_ukr(
+    int k,
+		int m,
+		int n,
+    double *a,
+    double *b,
+    double *c,
+		unsigned long long ldc,
+    aux_t *data );
 
-#define DGEMM_KC 256
-#define DGEMM_MC 256
-#define DGEMM_NC 512
-#define DGEMM_MR 16
-#define DGEMM_NR 4
-#endif
+void bl_dgemm_ukr_sve(
+    int k,
+    int m,
+    int n,
+    double *a,
+    double *b,
+    double *c,
+    unsigned long long ldc,
+    aux_t *data );
 
-//#define BL_MICRO_KERNEL bl_dgemm_ukr
-#define BL_MICRO_KERNEL bl_dgemm_ukr_sve
+static void (*bl_micro_kernel) (
+    int k,
+	  int m,
+	  int n,
+    const double *restrict a,
+    const double *restrict b,
+    const double *restrict c,
+		unsigned long long ldc,
+    aux_t *aux
+    ) = {
+        BL_MICRO_KERNEL
+};
+
+
 
 // End extern "C" construct block.
 #ifdef __cplusplus
