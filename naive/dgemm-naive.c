@@ -1,8 +1,3 @@
-/*
- *  A naive implementation of matrix multiply using the "ijk" algorithm
- *  Provided by Jim Demmel at UC Berkeley
- */
-
 const char* dgemm_desc = "Naive, three-loop dgemm.";
 
 /* This routine performs a dgemm operation
