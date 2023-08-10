@@ -1,8 +1,5 @@
 // Process command line arguments
 // 
-// Do not change the code in this file, as doing so
-// could cause your submission to be graded incorrectly
-//
 
 #include <stdlib.h> // For: exit, drand48, malloc, free, NULL, EXIT_FAILURE
 #include <stdio.h>  // For: perror
