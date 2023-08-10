@@ -1,9 +1,3 @@
-/*
- *  DGEMM Code, provided by Jim Demmel at UC Berkeley
- *  Modified by Scott B. Baden at UC San Diego to
- *  Support CBLAS interface
- */
-
 #ifdef USE_MKL
 #include "mkl.h"
 #else
