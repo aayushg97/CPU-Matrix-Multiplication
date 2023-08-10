@@ -1,9 +1,7 @@
 /*
  *  Driver code for Matrix Multplication
- *  Provided by Jim Demmel at UC Berkeley
- *  Modified by Scott B. Baden at UC San Diego to
- *      Enable user to select one problem size only via the -n option
- *      Support CBLAS interface
+ *  Enable user to select one problem size only via the -n option
+ *  Support CBLAS interface
  */
 
 #include <stdlib.h> // For: exit, random, malloc, free, NULL, EXIT_FAILURE
